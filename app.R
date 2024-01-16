@@ -3,7 +3,6 @@ library(shinyalert)
 library(shinythemes)
 library(shinycssloaders)
 library(shinyWidgets)
-library(shiny.telemetry)
 library(spotifyr)
 library(SpotifyNetwork)
 library(spsComps)
@@ -30,10 +29,6 @@ my_theme <- bs_theme(
   version = 5,
   "navbar-bg" = "#16F529"
 )
-
-# initialize telemetry
-telemetry <- Telemetry$new()
-
 
 # define UI for application that gets Spotify network data
 ui <- navbarPage(
@@ -195,9 +190,7 @@ ui <- navbarPage(
 
 # define server logic required to get Spotify's network data
 server <- function(input, output, session) {
-  # track events
-  telemetry$start_session()
-
+  
   # set up Spotify API credentials environment
   authentication <- function(id, secret) {
     client_ID <- id
