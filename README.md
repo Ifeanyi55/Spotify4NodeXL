@@ -1,3 +1,3 @@
-# **Spotify Data Importer**
+# **Spotify4NodeXL**
 
 ![Image](importer.png)
