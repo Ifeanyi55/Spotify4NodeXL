@@ -1,3 +1,3 @@
 # **Spotify4NodeXL**
 
-![Image](spotify4nodexl.png)
+![Image](spotify4nodexl.jpg)
