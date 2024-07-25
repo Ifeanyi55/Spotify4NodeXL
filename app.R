@@ -31,7 +31,6 @@ my_theme <- bs_theme(
   "navbar-bg" = "#16F529"
 )
 
-
 # define UI for application that gets Spotify network data
 ui <- navbarPage(
   title = strong("Spotify Data Importer"), id = "navbar",
