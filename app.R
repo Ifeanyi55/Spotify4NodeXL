@@ -3,7 +3,6 @@ library(shinyalert)
 library(shinythemes)
 library(shinycssloaders)
 library(shinyWidgets)
-library(shiny.telemetry)
 library(spotifyr)
 library(SpotifyNetwork)
 library(spsComps)
@@ -11,6 +10,7 @@ library(searcher)
 library(reactable)
 library(bslib)
 library(dplyr)
+library(igraph)
 
 # set global options
 options(
@@ -31,18 +31,12 @@ my_theme <- bs_theme(
   "navbar-bg" = "#16F529"
 )
 
-# initialize telemetry
-telemetry <- Telemetry$new()
-
 
 # define UI for application that gets Spotify network data
 ui <- navbarPage(
   title = strong("Spotify Data Importer"), id = "navbar",
   # useShinyalert(),
   windowTitle = "Spotify Data Importer",
-  
-  # add telemetry javascript elements
-  header = use_telemetry(),
   
   footer = h5(strong(tagList(h5(span("Spotify Data Importer for",style="color:green"), a("NodeXL", href = "https://www.nodexl.com/"))))),
   theme = my_theme, collapsible = T, setBackgroundImage(src = "music.jpg"),
@@ -133,61 +127,55 @@ ui <- navbarPage(
   ),
   tabPanel(
       id = "tabD", strong("NodeXL YouTube"), icon = icon("youtube"),
-      sidebarLayout(sidebarPanel(id = ""), mainPanel(
-        tags$iframe(
+      sidebarLayout(sidebarPanel = "", mainPanel(
+      tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/xKhYGRpbwOc",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        ), hr(),
-        tags$iframe(
+          allowfullscreen = T),style = "text-align:center;margin-left:370px"), hr(),
+        tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/Gs4NPuKIXdo",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        ), hr(),
-        tags$iframe(
+          allowfullscreen = T),style = "text-align:center;margin-left:370px"), hr(),
+        tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/J1W5uqAyHTg",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        ), hr(),
-        tags$iframe(
+          allowfullscreen = T),style = "text-align:center;margin-left:370px"), hr(),
+        tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/zEgrruOITHw",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        ), hr(),
-        tags$iframe(
+          allowfullscreen = T),style = "text-align:center;margin-left:370px"), hr(),
+        tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/pwsImFyc0lE",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        ), hr(),
-        tags$iframe(
+          allowfullscreen = T),style = "text-align:center;margin-left:370px"), hr(),
+        tags$div(tags$iframe(
           width = "620",
           height = "350",
           src = "https://www.youtube.com/embed/mjAq8eA7uOM",
           title = "YouTube video player",
           frameborder = "0",
           allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-          allowfullscreen = T
-        )
+          allowfullscreen = T),style = "text-align:center;margin-left:370px")
       ))
     )
   )
@@ -195,9 +183,7 @@ ui <- navbarPage(
 
 # define server logic required to get Spotify's network data
 server <- function(input, output, session) {
-  # track events
-  telemetry$start_session()
-
+  
   # set up Spotify API credentials environment
   authentication <- function(id, secret) {
     client_ID <- id
